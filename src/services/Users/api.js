@@ -47,8 +47,8 @@ export async function UpdateUser(data) {
     ...{},
   });
 }
-export async function SuspendUser(id) {
-  return fetch(url + `/api/Users/SuspendUser/${id}`, {
+export async function ChangeUserStatus(id,status) {
+  return fetch(url + `/api/Users/ChangeStatusUser/${id}/${status}`, {
     method: "GET",
     ...{},
   });

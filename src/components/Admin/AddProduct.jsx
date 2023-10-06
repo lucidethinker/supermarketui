@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import {
   CreateProduct,
   GetAllProductCategories,
+  GetProduct,
+  UpdateProduct,
 } from "../../services/Products/api";
 
 const AddProduct = () => {
   const [categories, setCategories] = useState([]);
+  const { id } = useParams();
   const [formData, setFormData] = useState({
+    productId : 0,
     productCategoryId: "",
     productName: "",
     price: "",
@@ -16,16 +20,30 @@ const AddProduct = () => {
     stockQuantity: 0,
     vendor: "",
     descriptions: "",
-    image: null, // For file upload
+    image: null,
   });
   useEffect(() => {
-    // Fetch categories from the server and set them in the state
     async function fetchCategories() {
       try {
         const response = await GetAllProductCategories();
         if (response.ok) {
           const data = await response.json();
-          setCategories(data); // Assuming the response is an array of category options
+          setCategories(data);
+        }
+        if (id != null || id > 0) {
+          let res = await GetProduct(id);
+          let data = await res.json();
+          setFormData({
+            productId : data.productId,
+            productCategoryId: data.productCategoryId,
+            productName: data.productName,
+            price: data.price,
+            tax: data.tax,
+            discount: data.discount,
+            stockQuantity: data.stockQuantity,
+            vendor: data.vendor,
+            descriptions: data.descriptions,
+          });
         }
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -46,18 +64,28 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    var res = await CreateProduct(formData);
-    var a = await res.json();
-    if (a.productId > 0) {
-      navigate("/Admin/ProductList");
-    } else alert(a.productName);
+    if (id > 0) {
+      var resp = await UpdateProduct(formData);
+      var b = await resp.json();
+      if (b.productId > 0) {
+        alert("Product Updated!!");
+        navigate("/Admin/ProductList");
+      } else alert(b.productName);
+    } else {
+      var res = await CreateProduct(formData);
+      var a = await res.json();
+      if (a.productId > 0) {
+        navigate("/Admin/ProductList");
+      } else alert(a.productName);
+    }
   };
 
   return (
     <div className="flex items-center justify-center h-screen bg-blue-500">
       <div className="bg-white p-8 rounded-md shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-semibold mb-4 text-center">Add Product</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-center">
+          {id == null || id == 0 ? "Add" : "Edit"} Product
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-2">
             <label
@@ -211,7 +239,7 @@ const AddProduct = () => {
               type="submit"
               className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
             >
-              Add Product
+              { (id == 0 || id == null)? "Add" : "Edit"} Product
             </button>
           </div>
         </form>

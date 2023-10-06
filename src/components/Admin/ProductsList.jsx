@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import {
   GetAllProductCategories,
   GetAllProducts,
+  DeleteProduct
 } from "../../services/Products/api";
+import { useNavigate } from "react-router-dom";
 
 const ProductsList = () => {
   const [pList, setpList] = useState([]);
   const [cList, setcList] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     async function fetchData() {
       var res = await GetAllProducts();
@@ -17,6 +20,22 @@ const ProductsList = () => {
     }
     fetchData();
   }, []);
+  
+  const deleteProduct = async (productId) => {
+    try {      
+      const response = await DeleteProduct(productId);
+  
+      if (response.status === 200) {        
+        setpList((prevProducts) =>
+          prevProducts.filter((product) => product.productId !== productId)
+        );                
+      } else {        
+        alert("Error deleting product:", response);
+      }
+    } catch (error) {      
+      alert("Error deleting product:", error);
+    }
+  };
   return (
     <div className="container mx-auto mt-4">
       <div className="flex justify-end">
@@ -92,13 +111,13 @@ const ProductsList = () => {
               </td>
               <td className="px-4 py-2 border border-gray-200">
                 <button
-                  onClick={() => {}}
+                  onClick={() => {navigate(`/Admin/EditProduct/${item.productId}`)}}
                   className="bg-blue-500 text-white py-2 px-4 rounded-md"
                 >
                   Edit
                 </button>
                 <button
-                  onClick={() => {}}
+                  onClick={() => deleteProduct(item.productId)}
                   className="bg-red-500 text-white px-4 py-2 rounded  ml-2"
                 >
                   Delete

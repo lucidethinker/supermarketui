@@ -9,6 +9,7 @@ import ProductCategoryList from './components/Admin/ProductCategoryList';
 import AddProductCategory from './components/Admin/AddProductCategory';
 import UsersList from './components/Admin/UsersList';
 import CreateInvoice from './components/Staffs/CreateInvoice';
+import OrdersList from './components/Staffs/OrdersList';
 
 const AppRoutes = () => {
   return (
@@ -18,12 +19,14 @@ const AppRoutes = () => {
       <Route path ="/Register" element={<Register />} />  
       {/* Admin */}
       <Route path ="/Admin/ProductCategoryList" element={<ProductCategoryList />} /> 
-      <Route path ="/Admin/AddCategory" element={<AddProductCategory />} /> 
+      <Route path ="/Admin/AddCategory" element={<AddProductCategory />} />       
       <Route path ="/Admin/ProductList" element={<ProductsList />} />
       <Route path ="/Admin/AddProduct" element={<AddProduct />} /> 
+      <Route path ="/Admin/EditProduct/:id" element={<AddProduct />} /> 
       <Route path ="/Admin/UsersList" element={<UsersList />} /> 
       {/* Staff */}
       <Route path ="/Staff/CreateInvoice" element={<CreateInvoice />} /> 
+      <Route path ="/Orders" element={<OrdersList />} /> 
     </Routes>
   );
 };

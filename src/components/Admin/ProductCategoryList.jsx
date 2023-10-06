@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
-import { GetAllProductCategories } from "../../services/Products/api";
+import {
+  DeleteProductCategory,
+  GetAllProductCategories,
+} from "../../services/Products/api";
+import { useNavigate } from "react-router-dom";
 
 const ProductCategoryList = () => {
   const [cList, setcList] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     async function fetchData() {
       var res = await GetAllProductCategories();
@@ -53,10 +58,20 @@ const ProductCategoryList = () => {
                 {item.discount}
               </td>
               <td className="px-4 py-2 border border-gray-200">
-                <button onClick={()=>{}} className="bg-blue-500 text-white py-2 px-4 rounded-md">
-                  Edit
-                </button>
-                <button onClick={()=>{}} className="bg-red-500 text-white px-4 py-2 rounded  ml-2">
+                <button
+                  onClick={async () => {
+                    var res = await DeleteProductCategory(
+                      item.productCategoryId
+                    );
+                    if (res.ok) {
+                      alert("Category Deleted");
+                      var resp = await GetAllProductCategories();
+                      var data = await resp.json();
+                      setcList([...data]);
+                    }
+                  }}
+                  className="bg-red-500 text-white px-4 py-2 rounded  ml-2"
+                >
                   Delete
                 </button>
               </td>
