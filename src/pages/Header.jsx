@@ -49,12 +49,18 @@ const Header = () => {
             </a>
           )}
           {loginUserType == 0 && (
-            <a href="/Admin/UsersList" className="text-white hover:text-gray-300">
+            <a
+              href="/Admin/UsersList"
+              className="text-white hover:text-gray-300"
+            >
               Users
             </a>
-          )}        
+          )}
           {loginUserType == 1 && (
-            <a href="/Staff/CreateInvoice" className="text-white hover:text-gray-300">
+            <a
+              href="/Staff/CreateInvoice"
+              className="text-white hover:text-gray-300"
+            >
               Create Invoice
             </a>
           )}

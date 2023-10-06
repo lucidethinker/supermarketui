@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {
   GetAllProductCategories,
   GetAllProducts,
-  DeleteProduct
+  DeleteProduct,
 } from "../../services/Products/api";
 import { useNavigate } from "react-router-dom";
 
@@ -20,19 +20,19 @@ const ProductsList = () => {
     }
     fetchData();
   }, []);
-  
+
   const deleteProduct = async (productId) => {
-    try {      
+    try {
       const response = await DeleteProduct(productId);
-  
-      if (response.status === 200) {        
+
+      if (response.status === 200) {
         setpList((prevProducts) =>
           prevProducts.filter((product) => product.productId !== productId)
-        );                
-      } else {        
+        );
+      } else {
         alert("Error deleting product:", response);
       }
-    } catch (error) {      
+    } catch (error) {
       alert("Error deleting product:", error);
     }
   };
@@ -62,10 +62,10 @@ const ProductsList = () => {
               Price
             </th>
             <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
-              Tax
+              Tax%
             </th>
             <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
-              Discount
+              Discount%
             </th>
             <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
               Stock
@@ -111,7 +111,9 @@ const ProductsList = () => {
               </td>
               <td className="px-4 py-2 border border-gray-200">
                 <button
-                  onClick={() => {navigate(`/Admin/EditProduct/${item.productId}`)}}
+                  onClick={() => {
+                    navigate(`/Admin/EditProduct/${item.productId}`);
+                  }}
                   className="bg-blue-500 text-white py-2 px-4 rounded-md"
                 >
                   Edit

@@ -48,9 +48,17 @@ const CreateInvoice = () => {
 
     var total = 0;
     if (iList.length > 0)
-      iList.forEach((i) => {
-        let rate = i.price * i.Quantity;
-        if (rate != 0) total += rate + i.tax - i.discount;
+      iList.forEach((item) => {
+        const quantity = +item.Quantity;
+        const unitPrice = +item.price;
+        const tax = +item.tax;
+        const discount = +item.discount;
+
+        const rate = unitPrice * quantity;
+
+        if (rate !== 0) {
+          total += rate + tax - discount;
+        }
       });
     setTotal(total);
   };
@@ -72,34 +80,35 @@ const CreateInvoice = () => {
   return (
     <div className="container mx-auto mt-4">
       <div className="relative inline-block text-left">
-        <div className="flex justify-center items-center">
-          <label className="block font-bold mr-2" htmlFor="search">
-            Search
-          </label>
-          <input
-            type="text"
-            id="search"
-            name="search"
-            value={searchValue}
-            onChange={(e) => handleChange(e.target.value)}
-            className="w-1/2 px-4 py-2 border rounded-md"
-          />
-        </div>
-        {sList.length > 0 && (
-          <div className="origin-top-right absolute right-1 mt-2 w-1/2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-            {sList.map((product) => (
-              <div
-                key={product.productId}
-                onClick={() => handleOptionClick(product)}
-                className="cursor-pointer hover:bg-gray-100 px-4 py-2"
-              >
-                {product.productName}
-              </div>
-            ))}
+        <div className="relative">
+          <div className="flex items-center">
+            <label className="block font-bold mr-2" htmlFor="search">
+              Search
+            </label>
+            <input
+              type="text"
+              id="search"
+              name="search"
+              value={searchValue}
+              onChange={(e) => handleChange(e.target.value)}
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
           </div>
-        )}
+          {sList.length > 0 && (
+            <div className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+              {sList.map((product) => (
+                <div
+                  key={product.productId}
+                  onClick={() => handleOptionClick(product)}
+                  className="cursor-pointer hover:bg-gray-100 px-4 py-2 font-bold"
+                >
+                  {product.productName}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-
       <table className="min-w-full table-auto border border-collapse border-gray-200 mt-5">
         <thead>
           <tr>
@@ -113,10 +122,10 @@ const CreateInvoice = () => {
               Price
             </th>
             <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
-              Tax
+              Tax%
             </th>
             <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
-              Discount
+              Discount%
             </th>
             <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
               Stock
@@ -232,103 +241,100 @@ const CreateInvoice = () => {
           Invoice
         </button>
       </div>
-      {cI && (
-        <div className="max-w max-h mx-auto bg-white rounded-xl shadow-md overflow-hidden mt-4">
-          <div className="md:flex">
-            <div className="p-8">
-              <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-                INVOICE
-              </div>
-              <a
-                href="#"
-                className="block mt-1 text-lg leading-tight font-medium text-black hover:underline"
-              >
-                {"INV" + InvNo}
-              </a>
-              <table className="min-w-full table-auto border border-collapse border-gray-200 mt-5">
-                <thead>
-                  <tr>
-                    <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
-                      Sl.No
-                    </th>
-                    <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
-                      Product Name
-                    </th>
-                    <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
-                      Price
-                    </th>
-                    <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
-                      Tax
-                    </th>
-                    <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
-                      Discount
-                    </th>
-                    <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
-                      Quantity
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {iList.map((item, index) => (
-                    <tr key={index} className="hover:bg-gray-100">
-                      <td className="px-4 py-2 border border-gray-200">
-                        {index + 1}
-                      </td>
-                      <td className="px-4 py-2 border border-gray-200">
-                        {item.productName}
-                      </td>
-                      <td className="px-4 py-2 border border-gray-200">
-                        {item.price}
-                      </td>
-                      <td className="px-4 py-2 border border-gray-200">
-                        {item.tax}
-                      </td>
-                      <td className="px-4 py-2 border border-gray-200">
-                        {item.discount}
-                      </td>
-                      <td className="px-4 py-2 border border-gray-200">
-                        {item.Quantity}
-                      </td>
+      <div className="flex items-center justify-center">
+        {cI && (
+          <div className="max-w max-h mx-auto bg-white rounded-xl shadow-md overflow-hidden mt-4">
+            <div className="md:flex">
+              <div className="p-8">
+                <div className="uppercase  tracking-wide text-sm font-semibold">
+                  INVOICE : {"INV" + InvNo}
+                </div>
+
+                <table className="min-w-full table-auto border border-collapse border-gray-200 mt-5">
+                  <thead>
+                    <tr>
+                      <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
+                        Sl.No
+                      </th>
+                      <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
+                        Product Name
+                      </th>
+                      <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
+                        Price
+                      </th>
+                      <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
+                        Tax%
+                      </th>
+                      <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
+                        Discount%
+                      </th>
+                      <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
+                        Quantity
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {iList.map((item, index) => (
+                      <tr key={index} className="hover:bg-gray-100">
+                        <td className="px-4 py-2 border border-gray-200">
+                          {index + 1}
+                        </td>
+                        <td className="px-4 py-2 border border-gray-200">
+                          {item.productName}
+                        </td>
+                        <td className="px-4 py-2 border border-gray-200">
+                          {item.price}
+                        </td>
+                        <td className="px-4 py-2 border border-gray-200">
+                          {item.tax}
+                        </td>
+                        <td className="px-4 py-2 border border-gray-200">
+                          {item.discount}
+                        </td>
+                        <td className="px-4 py-2 border border-gray-200">
+                          {item.Quantity}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div className="px-6 py-4">
+              <span className="inline-block font-bold px-3 py-1 text-sm text-gray-700 mr-2">
+                Gross Amount : {grossAmount}
+              </span>
+              <span className="inline-block font-bold px-3 py-1 text-sm text-gray-700 mr-2">
+                Total Tax : {taxAmount}
+              </span>
+              <span className="inline-block font-bold px-3 py-1 text-sm text-gray-700">
+                Total Discount : {discountAmount}
+              </span>
+              <span className="inline-block font-bold px-3 py-1 text-sm text-gray-700">
+                Net Amount : {total}
+              </span>
+              <div className="flex items-center mt-4">
+                <button
+                  onClick={async () => {
+                    let confrm = confirm("Proceed to Bill?");
+                    if (confrm) {
+                      let res = await AddOrder(fData);
+                      let data = await res.json();
+                      if (data.orderId > 0) {
+                        alert("Billed Successfully!!");
+                        navigate("/Orders");
+                      } else alert("Billing Failed!!");
+                    } else return;
+                  }}
+                  className="bg-blue-500 text-white px-4 py-2 rounded ml-2 hover:bg-blue-700 focus:outline-none"
+                >
+                  Proceed
+                </button>
+              </div>
             </div>
           </div>
-          <div className="px-6 py-4">
-            <span className="inline-block font-bold px-3 py-1 text-sm text-gray-700 mr-2">
-              Gross Amount : {grossAmount}
-            </span>
-            <span className="inline-block font-bold px-3 py-1 text-sm text-gray-700 mr-2">
-              Total Tax : {taxAmount}
-            </span>
-            <span className="inline-block font-bold px-3 py-1 text-sm text-gray-700">
-              Total Discount : {discountAmount}
-            </span>
-            <span className="inline-block font-bold px-3 py-1 text-sm text-gray-700">
-              Net Amount : {total}
-            </span>
-            <div className="flex items-center mt-4">
-              <button
-                onClick={async () => {
-                  let confrm = confirm("Proceed to Bill?");
-                  if (confrm) {
-                    let res = await AddOrder(fData);
-                    let data = await res.json();
-                    if (data.orderId > 0) {
-                      alert("Billed Successfully!!");
-                      navigate("/Orders");
-                    } else alert("Billing Failed!!");
-                  } else return;
-                }}
-                className="bg-blue-500 text-white px-4 py-2 rounded ml-2 hover:bg-blue-700 focus:outline-none"
-              >
-                Proceed
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
