@@ -317,7 +317,7 @@ const CreateInvoice = () => {
                     let data = await res.json();
                     if (data.orderId > 0) {
                       alert("Billed Successfully!!");
-                      navigate('/Orders');
+                      navigate("/Orders");
                     } else alert("Billing Failed!!");
                   } else return;
                 }}

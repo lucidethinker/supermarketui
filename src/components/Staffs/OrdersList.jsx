@@ -30,9 +30,6 @@ const OrdersList = () => {
           <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
             Discount
           </th>
-          <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
-            Stock
-          </th>
         </tr>
       </thead>
       <tbody>
