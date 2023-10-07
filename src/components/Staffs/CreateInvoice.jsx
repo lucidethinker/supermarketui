@@ -113,10 +113,10 @@ const CreateInvoice = () => {
               Price
             </th>
             <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
-              Tax
+              Tax%
             </th>
             <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
-              Discount
+              Discount%
             </th>
             <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
               Stock
@@ -317,7 +317,7 @@ const CreateInvoice = () => {
                     let data = await res.json();
                     if (data.orderId > 0) {
                       alert("Billed Successfully!!");
-                      navigate('/Orders');
+                      navigate("/Orders");
                     } else alert("Billing Failed!!");
                   } else return;
                 }}

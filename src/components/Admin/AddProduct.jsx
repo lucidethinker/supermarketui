@@ -11,7 +11,7 @@ const AddProduct = () => {
   const [categories, setCategories] = useState([]);
   const { id } = useParams();
   const [formData, setFormData] = useState({
-    productId : 0,
+    productId: 0,
     productCategoryId: "",
     productName: "",
     price: "",
@@ -34,7 +34,7 @@ const AddProduct = () => {
           let res = await GetProduct(id);
           let data = await res.json();
           setFormData({
-            productId : data.productId,
+            productId: data.productId,
             productCategoryId: data.productCategoryId,
             productName: data.productName,
             price: data.price,
@@ -171,7 +171,7 @@ const AddProduct = () => {
               htmlFor="tax"
               className="block text-sm font-medium text-gray-700"
             >
-              Tax
+              Tax%
             </label>
             <input
               type="text"
@@ -188,7 +188,7 @@ const AddProduct = () => {
               htmlFor="discount"
               className="block text-sm font-medium text-gray-700"
             >
-              Discount
+              Discount%
             </label>
             <input
               type="text"
@@ -239,7 +239,7 @@ const AddProduct = () => {
               type="submit"
               className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
             >
-              { (id == 0 || id == null)? "Add" : "Edit"} Product
+              {id == 0 || id == null ? "Add" : "Edit"} Product
             </button>
           </div>
         </form>

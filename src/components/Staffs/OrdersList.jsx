@@ -16,7 +16,6 @@ const OrdersList = () => {
       setuList(u);
       setoList(data);
 
-      // Calculate total amount by date
       const totalByDate = {};
       data.forEach((item) => {
         const date = item.orderDate.split(" ")[0];
@@ -49,10 +48,10 @@ const OrdersList = () => {
               Gross
             </th>
             <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
-              Tax
+              Tax%
             </th>
             <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
-              Discount
+              Discount%
             </th>
             <th className="px-4 py-2 bg-blue-300 border border-gray-200 text-white">
               Total
