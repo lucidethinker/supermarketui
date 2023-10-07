@@ -23,9 +23,7 @@ const Header = () => {
   return (
     <nav className="bg-blue-500 p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-white text-xl font-semibold">
-          <a href="/">My Supermarket</a>
-        </div>
+        <div className="text-white text-xl font-semibold"></div>
         <div className="space-x-4">
           {loginStatus == null && (
             <a href="/" className="text-white hover:text-gray-300">
@@ -49,12 +47,18 @@ const Header = () => {
             </a>
           )}
           {loginUserType == 0 && (
-            <a href="/Admin/UsersList" className="text-white hover:text-gray-300">
+            <a
+              href="/Admin/UsersList"
+              className="text-white hover:text-gray-300"
+            >
               Users
             </a>
-          )}        
+          )}
           {loginUserType == 1 && (
-            <a href="/Staff/CreateInvoice" className="text-white hover:text-gray-300">
+            <a
+              href="/Staff/CreateInvoice"
+              className="text-white hover:text-gray-300"
+            >
               Create Invoice
             </a>
           )}
