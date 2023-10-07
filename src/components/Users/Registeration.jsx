@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { useNavigate } from "react-router";
 import { SignUp } from "../../services/Users/api";
 
@@ -7,8 +7,7 @@ const Register = () => {
     email: "",
     fullname: "",
     gender: "Male",
-    username: "",
-    phoneNumber: "",
+    username: "",    
     password: "",
   });
   const navigate = useNavigate();
@@ -125,25 +124,7 @@ const Register = () => {
               <option value="male">Male</option>
               <option value="female">Female</option>
             </select>
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="phoneNumber"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Phone Number
-            </label>
-            <input
-              type="tel"
-              id="phoneNumber"
-              name="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md"
-              required
-            />
-          </div>
-
+          </div>         
           <div className="text-center">
             <button
               type="submit"

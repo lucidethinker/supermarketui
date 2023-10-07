@@ -10,13 +10,15 @@ import AddProductCategory from './components/Admin/AddProductCategory';
 import UsersList from './components/Admin/UsersList';
 import CreateInvoice from './components/Staffs/CreateInvoice';
 import OrdersList from './components/Staffs/OrdersList';
+import UserAccount from './components/Users/UserAccount';
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path ="/" element={<Home />} />
       <Route path ="/Login" element={<Login/>} />
-      <Route path ="/Register" element={<Register />} />  
+      <Route path ="/Register" element={<Register />} /> 
+      <Route path ="/UserAccount" element ={<UserAccount/>}/>
       {/* Admin */}
       <Route path ="/Admin/ProductCategoryList" element={<ProductCategoryList />} /> 
       <Route path ="/Admin/AddCategory" element={<AddProductCategory />} />       
