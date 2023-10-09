@@ -4,11 +4,13 @@ import {
   GetAllProductCategories,
 } from "../../services/Products/api";
 import { useNavigate } from "react-router-dom";
+import { CheckUser } from "../../services/Users/api";
 
 const ProductCategoryList = () => {
   const [cList, setcList] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
+    if (!CheckUser(0)) navigate("/Error");
     async function fetchData() {
       var res = await GetAllProductCategories();
       var data = await res.json();

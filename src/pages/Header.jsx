@@ -14,6 +14,8 @@ const Header = () => {
 
   const handleLogOut = () => {
     Cookies.remove("loginStatus");
+    Cookies.remove("jwt");
+    Cookies.remove("Authorization");
     Cookies.remove("loginUserType");
     Cookies.remove("userId");
     setLoginStatus(false);

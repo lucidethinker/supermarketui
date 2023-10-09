@@ -3,12 +3,16 @@ import {
   GetAllUser,
   ChangeUserStatus,
   DeleteUser,
+  CheckUser,
 } from "../../services/Users/api";
+import { useNavigate } from "react-router-dom";
 
 const UsersList = () => {
   const [uList, setuList] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
+    if (!CheckUser(0)) navigate("/Error");
     async function fetchData() {
       var res = await GetAllUser();
       var data = await res.json();
@@ -93,9 +97,7 @@ const UsersList = () => {
                     if (resp) {
                       alert("User Deleted");
                       setRefresh(!refresh);
-                    }
-                    else
-                    alert("Something Went Wrong");
+                    } else alert("Something Went Wrong");
                   }}
                   className="bg-red-500 text-white px-4 py-2 rounded  ml-2"
                 >

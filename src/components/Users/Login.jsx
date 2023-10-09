@@ -22,15 +22,17 @@ const Login = () => {
     // Handle login logic here (e.g., sending data to the server)
     console.log(formData);
     var res = await SignIn(formData);
-    var a = await res.json();
-    if (a.userId > 0) {
+    var token = res.token;
+    const decodedToken = atob(token.split(".")[1]);
+
+    const payload = JSON.parse(decodedToken);
+    if (res.token) {
       Cookies.set("loginStatus", "true");
-      Cookies.set("loginUserType", a.userType);
-      Cookies.set("userId",a.userId);
+      Cookies.set("jwt", res.token);
+      Cookies.set("loginUserType", Number(payload.role));
+      Cookies.set("userId", res.user.userId);
       history("/");
-    }
-    else
-    alert(a.userName);
+    } else alert(res.userName);
   };
 
   return (

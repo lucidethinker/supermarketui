@@ -5,12 +5,14 @@ import {
   DeleteProduct,
 } from "../../services/Products/api";
 import { useNavigate } from "react-router-dom";
+import { CheckUser } from "../../services/Users/api";
 
 const ProductsList = () => {
   const [pList, setpList] = useState([]);
   const [cList, setcList] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
+    if (!CheckUser(0)) navigate("/Error");
     async function fetchData() {
       var res = await GetAllProducts();
       var data = await res.json();

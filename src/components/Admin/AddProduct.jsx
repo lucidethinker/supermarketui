@@ -6,6 +6,7 @@ import {
   GetProduct,
   UpdateProduct,
 } from "../../services/Products/api";
+import { CheckUser } from "../../services/Users/api";
 
 const AddProduct = () => {
   const [categories, setCategories] = useState([]);
@@ -23,6 +24,7 @@ const AddProduct = () => {
     image: null,
   });
   useEffect(() => {
+    if (!CheckUser(0)) navigate("/Error");
     async function fetchCategories() {
       try {
         const response = await GetAllProductCategories();

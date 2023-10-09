@@ -3,6 +3,7 @@ import { GetAllProducts } from "../../services/Products/api";
 import Cookies from "js-cookie";
 import { AddOrder, GetInvNo } from "../../services/Orders/api";
 import { useNavigate } from "react-router-dom";
+import { CheckUser } from "../../services/Users/api";
 
 const CreateInvoice = () => {
   const [iList, setiList] = useState([]);
@@ -18,9 +19,10 @@ const CreateInvoice = () => {
   const [cI, setCI] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
+    if (!CheckUser()) navigate("/Error");
     async function fetchData() {
-      // let t = await GetInvNo();
-      // setInvNo(await t.json());
+      let t = await GetInvNo();
+      setInvNo(await t.json());
       var res = await GetAllProducts();
       var tempList = await res.json();
       tempList.forEach((i) => (i.Quantity = 0));

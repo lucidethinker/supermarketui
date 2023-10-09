@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import {
-  AddCategory,
-} from "../../services/Products/api";
+import { AddCategory } from "../../services/Products/api";
+import { CheckUser } from "../../services/Users/api";
 
 const AddProductCategory = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +10,9 @@ const AddProductCategory = () => {
     discount: "",
   });
   const navigate = useNavigate();
-
+  useEffect(() => {
+    if (!CheckUser(0)) navigate("/Error");
+  }, []);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
